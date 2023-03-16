@@ -1,16 +1,19 @@
-# This is a sample Python script.
+import os
+import random
+import datetime
+import win32com.client as office
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from exportToDocx import exportToDocx
+from import_xls import importFromXls
+from generate_congratulations import generateTriads, abilityChecker
 
+xlsPath = 'data.xls'
+configSheetName = 'config'
+addressee = 'addressates'
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+congrats1, congrats2, congrats3, config, addresseeSheet, addresseeList = importFromXls(xlsPath, configSheetName, addressee)
 
+print(addresseeList)
+triads = generateTriads(congrats1, congrats2, congrats3, config, addresseeSheet)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+exportToDocx(config, addresseeSheet,addresseeList,triads)
